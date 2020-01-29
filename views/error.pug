@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1= title
+  p Aww, you may have broken one or more wires 😔
+  a(href='/') Care for some ☕ at home buddy?
+  pre #{error.stack}

@@ -1,0 +1,56 @@
+{
+  "name": "softcom",
+  "version": "1.0.0",
+  "description": "Life is Beautiful. Live the moment. These things have no formula",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "server": "nodemon ./bin/www"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongoDB",
+    "mongoose",
+    "REST"
+  ],
+  "author": "Josemaria Nriagu",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "express": "~4.16.1",
+    "helmet": "^3.21.2",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.10",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josenriagu/furry-winner.git"
+  },
+  "homepage": "https://github.com/josenriagu/furry-winner#readme",
+  "bugs": {
+    "url": "https://github.com/josenriagu/furry-winner/issues"
+  },
+  "devDependencies": {
+    "conventional-changelog-conventionalcommits": "^4.2.3",
+    "cross-env": "^7.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "husky": "^4.2.1",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
