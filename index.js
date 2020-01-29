@@ -38,12 +38,14 @@ app.use((err, req, res, next) => {
 
   // render the error page
   // res.status(err.status || 500);
+
+  // set the correct error status code and render the error page
   if (err.status === 404) {
-    res.render("404", { title: `${err.status}: ${err.message}`, error: err });
+    res.status(404).render("404", { title: `${err.status}: ${err.message}`, error: err });
   } else if (err.status === 500) {
-    res.render("500", { title: `${err.status}: ${err.message}`, error: err });
+    res.status(500).render("500", { title: `${err.status}: ${err.message}`, error: err });
   } else {
-    res.render("error", { title: `${err.status}: ${err.message}`, error: err });
+    res.status(`${err.status}`).render("error", { title: `${err.status}: ${err.message}`, error: err });
   }
 });
 

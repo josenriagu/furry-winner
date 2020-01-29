@@ -1,3 +1,3 @@
-const connectionUri = process.env.DATABASE_URI || "mongodb://localhost:27017/softcom";
+const connectionUri = process.env.NODE_ENV === 'staging' ? process.env.DATABASE_URI || "mongodb://localhost:27017/softcom" : process.env.DATABASE_TEST_URI;
 
 module.exports = connectionUri;

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www",
-    "server": "nodemon ./bin/www"
+    "server": "nodemon ./bin/www",
+    "test": "cross-env NODE_ENV=test jest --watchAll --verbose --passWithNoTests --runInBand --detectOpenHandles"
   },
   "keywords": [
     "node",
@@ -52,5 +53,11 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }

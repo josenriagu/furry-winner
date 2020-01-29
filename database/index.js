@@ -13,8 +13,8 @@ module.exports = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Connected to database");
+    if (process.env.NODE_ENV !== "test") console.log("Connected to database");
   } catch (error) {
-    console.log(`Connection to database failed: ${error.message}`);
+    if (process.env.NODE_ENV !== "test") console.log(`Connection to database failed: ${error.message}`);
   }
 };
