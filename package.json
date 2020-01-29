@@ -7,8 +7,7 @@
     "start": "node ./bin/www",
     "server": "nodemon ./bin/www",
     "test": "cross-env NODE_ENV=test jest --verbose --testTimeout=10000 --detectOpenHandles",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll --verbose --detectOpenHandles",
-    "travistest": "cross-env NODE_ENV=test jest --verbose --testTimeout=100000 --detectOpenHandles"
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll --verbose --detectOpenHandles"
   },
   "keywords": [
     "node",

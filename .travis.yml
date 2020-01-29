@@ -11,4 +11,4 @@ before_install:
 after_success:
   - "npm run coverage"
 script:
-  - "npm run travistest"
+  - "npm run test"
