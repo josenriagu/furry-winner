@@ -82,6 +82,16 @@ function onListening() {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port, () => console.log(`Server locked and loaded on port ${port}`));
+// Conditionally listen to server depending on NODE_ENV
+if (process.env.NODE_ENV === "staging") {
+  server.listen(port, () => console.log(`Server locked and loaded on port ${port}`));
+}
 server.on("error", onError);
 server.on("listening", onListening);
+
+/**
+ * This line is very important.
+ * Trying to run tests without exporting the server may result to
+ * 'TypeError: app.address is not a function'
+ */
+module.exports = server;

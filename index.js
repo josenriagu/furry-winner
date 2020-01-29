@@ -11,7 +11,10 @@ const usersRouter = require("./routes/users");
 
 const app = express();
 
-connectDB();
+// Conditionally connect to database depending on NODE_ENV
+if (process.env.NODE_ENV === "staging") {
+  connectDB();
+}
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -38,12 +41,20 @@ app.use((err, req, res, next) => {
 
   // render the error page
   // res.status(err.status || 500);
+
+  // set the correct error status code and render the error page
   if (err.status === 404) {
-    res.render("404", { title: `${err.status}: ${err.message}`, error: err });
+    res
+      .status(404)
+      .render("404", { title: `${err.status}: ${err.message}`, error: err });
   } else if (err.status === 500) {
-    res.render("500", { title: `${err.status}: ${err.message}`, error: err });
+    res
+      .status(500)
+      .render("500", { title: `${err.status}: ${err.message}`, error: err });
   } else {
-    res.render("error", { title: `${err.status}: ${err.message}`, error: err });
+    res
+      .status(`${err.status}`)
+      .render("error", { title: `${err.status}: ${err.message}`, error: err });
   }
 });
 
