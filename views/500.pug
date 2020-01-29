@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1= title
+  p Errhm! Server's got an error, Gotta fix that asap! 🛠️
+  a(href='/') Shall we fix you some ☕ at home?
+  pre #{error.stack}
