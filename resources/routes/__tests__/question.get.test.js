@@ -25,7 +25,6 @@ describe("GET Question Route Tests", () => {
     const res = await request(app)
       .get("/api/v1/questions")
       .set("Authorization", token);
-    console.log(res.body.questions[0]._id);
     expect(res.type).toMatch(/json/);
     expect(res.status).toEqual(200);
     // Since we created 3 questions in our helper module, let's assert the length;
