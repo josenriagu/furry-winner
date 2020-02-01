@@ -7,13 +7,14 @@ module.exports = {
   async save(obj) {
     const newUser = new UserModel(obj);
     await newUser.save();
+    const token = generateToken(newUser);
     const user = modUser(newUser.toObject());
-    const token = generateToken(user);
     user.token = token;
     return user;
   },
-  login(user) {
-    const token = generateToken(user);
+  login(userModel) {
+    const token = generateToken(userModel);
+    const user = modUser(userModel.toObject());
     user.token = token;
     return user;
   },

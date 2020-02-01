@@ -21,12 +21,8 @@ const questionSchema = Schema(
     },
     answers: [
       {
-        /* The sparse property, tells the database to allow null
-         * values which will later be filled with unique values.
-         * Read more on sparse index and partial index.
-        */
-        answer: { type: String, require: true, index: true, unique: true, sparse: true },
-        userId: { type: String, require: true, index: true, unique: true, sparse: true },
+        answer: { type: String, required: true },
+        userId: { type: String, required: true },
         votes: { type: Number, default: 0 },
       }, { timestamps: true },
     ],

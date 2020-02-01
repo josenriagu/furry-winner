@@ -5,7 +5,6 @@ const QuestionModel = require("../models/question");
 
 const genError = require("./error");
 const m = require("./messageStrings");
-const modUser = require("../helpers/modUser");
 
 module.exports = {
   validateBody(req, res, next) {
@@ -38,7 +37,7 @@ module.exports = {
       }
     } else if (email && password && req.path === "/login") {
       if (user && bcrypt.compareSync(password, user.password)) {
-        req.user = modUser(user.toObject());
+        req.user = user;
         next();
       } else {
         next(genError(401, m.invalid));
@@ -78,6 +77,41 @@ module.exports = {
     } else {
       // At this point, question did not find the id and returned null as doc
       next(genError(404));
+    }
+  },
+  validateVote(req, res, next) {
+    const { type } = req.body;
+    if (type && (type === "up" || type === "down")) {
+      return next();
+    }
+    if (type && type !== "up" && type !== "down") {
+      return next(genError(400, m.invalidType));
+    }
+    return next(genError(400, m.missingFields));
+  },
+  validateAnswer(req, res, next) {
+    // Author of a question may not also answer their question
+    if (req.decodedToken.sub !== req.question.userId) {
+      const { answer } = req.body;
+      if (answer && answer.length >= 2) {
+        // answer field is present and valid
+        const found = req.question.answers.filter((el) => el.answer === answer);
+        if (found.length === 0) {
+          // Intending answer is unique
+          next();
+        } else {
+          // Intending answer matched an already existing answer
+          next(genError(403, m.aExists));
+        }
+      } else if (answer && answer.length < 2) {
+        // answer field is present and valid
+        next(genError(400, m.tooShort));
+      } else {
+        // answer field is missing
+        next(genError(400, m.missingFields));
+      }
+    } else {
+      next(genError(403, m.aBlocked));
     }
   },
 };

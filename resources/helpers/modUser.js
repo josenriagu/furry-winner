@@ -4,7 +4,6 @@ module.exports = (user) => {
   // Do not return the password field. Why should you, anyways? 😁
   delete modUser.password;
   delete modUser.__v;
-  modUser.id = modUser._id;
-  delete modUser._id;
+  delete modUser._id; // We do not need the user id anymore, it is already encrypted in the token
   return modUser;
 };
