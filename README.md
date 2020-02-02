@@ -1,4 +1,4 @@
-# Stack Overflow Clone [![Build Status](https://travis-ci.org/josenriagu/furry-winner.svg?branch=master)](https://travis-ci.org/josenriagu/furry-winner)
+# Stack Overflow Clone [![Build Status](https://travis-ci.org/josenriagu/furry-winner.svg?branch=master)](https://travis-ci.org/josenriagu/furry-winner) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/josenriagu/furry-winner/blob/master/LICENSE) [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://josemarianriagu.com#contact) [![GitHub stars](https://img.shields.io/github/stars/josenriagu/furry-winner.svg?style=social&label=Star&maxAge=2592000)](https://github.com/josenriagu/furry-winner/stargazers/) [![GitHub forks](https://img.shields.io/github/forks/josenriagu/furry-winner.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/josenriagu/furry-winner/network/)
 Life is Beautiful. Live the moment. These things have no formula
 
 Welcome buddy!
