@@ -1,4 +1,5 @@
 const express = require("express");
+const paginate = require("express-paginate");
 
 const controller = require("../controllers/question");
 
@@ -12,7 +13,7 @@ const router = express.Router();
 
 /* Get all questions */
 // Update: I made this endpoint pseudo-private by modifying restrict middleware ...
-router.get("/", restrict, async (req, res, next) => {
+router.get("/", restrict, paginate.middleware(10, 50), async (req, res, next) => {
   try {
     /*
       Token will let us strip author-specific field(s) like
@@ -20,8 +21,9 @@ router.get("/", restrict, async (req, res, next) => {
       Recall that at this point (if authenticated);
       we have access to the decodedToken in the req object
      */
-    const questions = await controller.findAll(req.decodedToken);
-    if (questions.length === 0) {
+    const [questionsArr, itemCount, pageCount] = await controller.findAll(req);
+
+    if (questionsArr.length === 0) {
       /*
         At first, the collection may be empty, let's show a nice response instead
         Got me thinking, what was the first question ever asked on Stack Overflow? haha!
@@ -32,7 +34,11 @@ router.get("/", restrict, async (req, res, next) => {
     }
     return res.status(200).json({
       message: m.qsRetrieved,
-      questions,
+      pageCount,
+      itemCount,
+      pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+      has_more: paginate.hasNextPages(req)(pageCount),
+      questions: questionsArr,
     });
   } catch (error) {
     return next(genError(500, error.message));

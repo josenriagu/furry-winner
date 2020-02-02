@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const QuestionModel = require("../models/question");
 const mapper = require("../helpers/mapper");
 const updater = require("../helpers/updater");
@@ -18,16 +17,35 @@ async function refine(object, token) {
 }
 
 module.exports = {
-  async findAll(token) {
-    // Find all questions
-    const questionsModelArr = await QuestionModel.find(
-      {}, (err, docs) => {
-        if (err) {
-          return err.message;
-        }
-        return docs;
-      },
-    );
+  async findAll(req) {
+    const { keyword, limit } = req.query;
+    // Initialize variables to hold our results
+    let questionsModelArr;
+    let questionsCount;
+    // Pass condition to determine which Promise to run
+    if (keyword) {
+      const regex = new RegExp(keyword, "i");
+      // Find and count all matching questions
+      [questionsModelArr, questionsCount] = await Promise.all([
+        QuestionModel.find({
+          question: regex,
+        }).limit(limit).skip(req.skip)
+          .exec(),
+        QuestionModel.countDocuments({
+          question: regex,
+        }),
+      ]);
+    } else {
+      // Find and count all questions instead
+      [questionsModelArr, questionsCount] = await Promise.all([
+        QuestionModel.find(
+          {},
+        ).limit(limit).skip(req.skip).exec(),
+        QuestionModel.countDocuments({}),
+      ]);
+    }
+
+    const pageCount = Math.ceil(questionsCount / req.query.limit);
     // If they exist;
     if (questionsModelArr.length > 0) {
       /*
@@ -35,13 +53,14 @@ module.exports = {
         It is important to use Promise to gracefully wait for all elements of the array to resolve
       */
       const questionsObjArr = await Promise.all(questionsModelArr.map((model) => {
-        const question = refine(model.toObject(), token);
+        const question = refine(model.toObject(), req.decodedToken);
         return question;
       }));
-      return questionsObjArr;
+
+      return [questionsObjArr, questionsCount, pageCount];
     }
     // If not, return the empty array, anyways
-    return questionsModelArr;
+    return [questionsModelArr, questionsCount, pageCount];
   },
   refine, // Also eporting this for use, outside this module
   async save(obj) {

@@ -114,4 +114,12 @@ module.exports = {
       next(genError(403, m.aBlocked));
     }
   },
+  validateQuery(req, res, next) {
+    const { keyword } = req.query;
+    if (keyword) {
+      next();
+    } else {
+      next(genError(400, m.nkeyword));
+    }
+  },
 };

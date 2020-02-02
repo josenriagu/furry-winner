@@ -1,5 +1,3 @@
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const request = require("supertest");
 
@@ -55,7 +53,7 @@ describe("POST Question Route Tests", () => {
   });
   it("throws error if question already exists", async (done) => {
     // This line creates a question in the db and will trigger unique middleware
-    const token = await createQuestion();
+    const { token } = await createQuestion();
     const res = await request(app)
       .post("/api/v1/questions")
       .set("Authorization", token)
