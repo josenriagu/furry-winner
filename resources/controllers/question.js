@@ -1,4 +1,5 @@
 const QuestionModel = require("../models/question");
+const UserModel = require("../models/user");
 const mapper = require("../helpers/mapper");
 const updater = require("../helpers/updater");
 
@@ -96,5 +97,36 @@ module.exports = {
       },
     );
     return savedQuestionModel;
+  },
+  async saveSubscription(req) {
+    /*
+      At this point, we have access to the user making the request
+    */
+    const userToUpdate = req.user;
+    // Let's update user's array of subscriptions
+    userToUpdate.subscriptions.push({ questionId: req.params.id });
+    let updatedUser = await UserModel.findByIdAndUpdate(
+      userToUpdate._id,
+      userToUpdate,
+      { new: true },
+    );
+    // Convert the returned user model to object and add more context
+    updatedUser = updatedUser.toObject();
+    const refined = await Promise.all(updatedUser.subscriptions.map(async (obj) => {
+      const question = await QuestionModel.findById(obj.questionId, (err, doc) => {
+        if (err) return false;
+        return doc;
+      });
+      const refinedQ = await refine(question.toObject(), req.decodedToken);
+      return refinedQ;
+    }));
+    // Extract required fields
+    const user = {
+      reputation: updatedUser.reputation,
+      displayName: updatedUser.displayName,
+      subscriptions: refined,
+    };
+    // Return updated user, now with more context
+    return user;
   },
 };

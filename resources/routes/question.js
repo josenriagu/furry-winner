@@ -126,4 +126,17 @@ router.post("/:id/answer", restrict, v.validateBody, v.validateQuestionId, v.val
   }
 });
 
+/* Subscribe to a question */
+router.post("/:id/subscribe", restrict, v.validateQuestionId, v.validateSubscription, async (req, res, next) => {
+  try {
+    const user = await controller.saveSubscription(req);
+    return res.status(201).json({
+      message: m.qSubscribed,
+      user,
+    });
+  } catch (error) {
+    return next(genError(500, error.message));
+  }
+});
+
 module.exports = router;

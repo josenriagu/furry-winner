@@ -122,4 +122,15 @@ module.exports = {
       next(genError(400, m.nkeyword));
     }
   },
+  async validateSubscription(req, res, next) {
+    const { decodedToken, params } = req;
+    const user = await UserModel.findById(decodedToken.sub, "reputation displayName subscriptions");
+    const isSubscribed = user.toObject().subscriptions.find((obj) => obj.questionId === params.id);
+    if (isSubscribed) {
+      next(genError(403, m.qASubscribed));
+    } else {
+      req.user = user.toObject();
+      next();
+    }
+  },
 };

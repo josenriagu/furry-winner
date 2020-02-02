@@ -28,6 +28,11 @@ const userSchema = Schema(
       type: Number,
       default: 0,
     },
+    subscriptions: [
+      {
+        questionId: { type: String },
+      },
+    ],
   },
   { timestamps: true },
 );

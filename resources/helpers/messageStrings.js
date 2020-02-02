@@ -20,6 +20,8 @@ module.exports = {
   qCreated: "Question successfully created",
   qRetrieved: "Question successfully retrieved",
   qsRetrieved: "Questions successfully retrieved",
+  qASubscribed: "You have already subscribed to this question",
+  qSubscribed: "Question successfully added to your list of subscriptions",
   qRemoved: "Question successfully removed",
   nqRetrieved: "Tada! No questions yet! Why not try asking 'Why is Node called Node?'😉",
   aExists: "Hollit rai there!✋ This answer has already been recorded for this question, could you please check the responses?",
