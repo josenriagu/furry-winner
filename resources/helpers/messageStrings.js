@@ -29,5 +29,7 @@ module.exports = {
   invalidId: "Oops! That doesn't look like a valid Id",
   invalidType: "Oops! Vote 'type' must be either 'up' or 'down'",
   voteUpdated: "Votes successfully updated",
+  nkeyword: "Your search is missing a valid keyword",
+  sCompleted: "Search successfully completed",
   mailRegex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 };

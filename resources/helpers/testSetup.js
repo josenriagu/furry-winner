@@ -23,13 +23,14 @@ async function getToken() {
 async function createQuestion() {
   // We also need to create arbitrary question, to be able to trigger unique question middleware
   const token = await getToken();
-  await request(app)
+  const res = await request(app)
     .post("/api/v1/questions")
     .set("Authorization", token)
     .send({
       question: "Question 1?",
     });
-  return token;
+  const id = res.body.question._id;
+  return { token, id };
 }
 
 async function createQuestions() {
