@@ -57,6 +57,8 @@ displayName: String, required
 email: String, required
 password: String, required
 reputation: Number
+subscriptions: Array
+    questionId: String
 ```
 
 ### Question Model
